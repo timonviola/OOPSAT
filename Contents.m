@@ -1,4 +1,4 @@
-% OOPSAT - Power System Analysis Toolbox
+% OOPSAT
 %   Version 0.1      (R2020a)      08-04-2020
 %
 % OOPSAT is a heavily modified and restructured version of the original PSAT

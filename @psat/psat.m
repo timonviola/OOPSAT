@@ -269,10 +269,10 @@ classdef psat < handle
                 disp('The folder "build" could not be created')
               end
             end
-            if exist(obj.Path.images) ~= 7  %#ok
-              disp('No "images" folder found in the current PSAT path.')
-              failed = 1;
-            end
+%             if exist(obj.Path.images) ~= 7  %#ok
+%               disp('No "images" folder found in the current PSAT path.')
+%               failed = 1;
+%             end
             if exist(obj.Path.themes) ~= 7  %#ok
               disp('No "themes" folder found in the current PSAT path.')
               failed = ~mkdir(obj.Path.psat,'themes');

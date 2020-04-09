@@ -24,34 +24,35 @@ switch flag
 
   obj.Line = gcall(obj.Line,obj);
   gcall(obj.PQ,obj)
-  gcall(obj.Shunt,obj)
 
  case 'load'
 
   gcall(obj.PQ,obj)
-  gcall(obj.Shunt,obj)
   gisland(obj.Bus,obj)
 
  case 'gen0'
 
   obj.Line = gcall(obj.Line,obj);
   gcall(obj.PQ,obj)
-  gcall(obj.Shunt,obj)
 
  case 'load0'
 
   gcall(obj.PQ,obj)
-  gcall(obj.Shunt,obj)
   gisland(obj.Bus,obj)
 
  case '3'
 
-  
+  fcall(obj.Syn,obj)
+  obj.Exc = fcall(obj.Exc,obj);
+  obj.Tg = fcall(obj.Tg,obj);
+
  case '1r'
 
   obj.Line = gcall(obj.Line,obj);
   gcall(obj.PQ,obj)
-  gcall(obj.Shunt,obj)
+  obj.Syn = gcall(obj.Syn,obj);
+  gcall(obj.Exc,obj)
+  gcall(obj.Tg,obj)
   obj.PV = gcall(obj.PV,obj);
   obj.SW = gcall(obj.SW,obj);
   gisland(obj.Bus,obj)
@@ -66,15 +67,20 @@ switch flag
   obj.DAE.Fx = sparse(obj.DAE.n,obj.DAE.n);
   obj.DAE.Fy = sparse(obj.DAE.n,obj.DAE.m);
   obj.DAE.Gx = sparse(obj.DAE.m,obj.DAE.n);
-  
+  Fxcall(obj.Syn,obj)
+  Fxcall(obj.Exc,obj)
+  Fxcall(obj.Tg,obj)
+
  case '0'
 
-  
+  obj.Syn = setx0(obj.Syn,obj);
+  obj.Exc = setx0(obj.Exc,obj);
+  obj.Tg = setx0(obj.Tg,obj);
+
  case 'fdpf'
 
   obj.Line = gcall(obj.Line,obj);
   gcall(obj.PQ,obj)
-  gcall(obj.Shunt,obj)
   obj.PV = gcall(obj.PV,obj);
   obj.SW = gcall(obj.SW,obj);
   gisland(obj.Bus,obj)
@@ -83,13 +89,11 @@ switch flag
 
   obj.Line = gcall(obj.Line,obj);
   gcall(obj.PQ,obj)
-  gcall(obj.Shunt,obj)
   obj.PV = gcall(obj.PV,obj);
   obj.SW = gcall(obj.SW,obj);
   gisland(obj.Bus,obj)
   Gycall(obj.Line,obj)
   Gycall(obj.PQ,obj)
-  Gycall(obj.Shunt,obj)
   Gycall(obj.PV,obj)
   Gycall(obj.SW,obj)
   Gyisland(obj.Bus,obj)
@@ -106,31 +110,39 @@ switch flag
 
   obj.Line = gcall(obj.Line,obj);
   gcall(obj.PQ,obj)
-  gcall(obj.Shunt,obj)
+  obj.Syn = gcall(obj.Syn,obj);
+  gcall(obj.Exc,obj)
+  gcall(obj.Tg,obj)
   gisland(obj.Bus,obj)
   Gycall(obj.Line,obj)
   Gycall(obj.PQ,obj)
-  Gycall(obj.Shunt,obj)
+  obj.Syn = Gycall(obj.Syn,obj);
+  Gycall(obj.Exc,obj)
+  Gycall(obj.Tg,obj)
   Gyisland(obj.Bus,obj)
 
 
-  
+  fcall(obj.Syn,obj)
+  obj.Exc = fcall(obj.Exc,obj);
+  obj.Tg = fcall(obj.Tg,obj);
+
   obj.DAE.Fx = sparse(obj.DAE.n,obj.DAE.n);
   obj.DAE.Fy = sparse(obj.DAE.n,obj.DAE.m);
   obj.DAE.Gx = sparse(obj.DAE.m,obj.DAE.n);
-  
+  Fxcall(obj.Syn,obj)
+  Fxcall(obj.Exc,obj)
+  Fxcall(obj.Tg,obj)
+
  case 'kgpf'
 
   obj.Line = gcall(obj.Line,obj);
   gcall(obj.PQ,obj)
-  gcall(obj.Shunt,obj)
   obj.PV = gcall(obj.PV,obj);
   greactive(obj.SW,obj)
   glambda(obj.SW,1,obj.DAE.kg,obj)
   gisland(obj.Bus,obj)
   Gycall(obj.Line,obj)
   Gycall(obj.PQ,obj)
-  Gycall(obj.Shunt,obj)
   Gycall(obj.PV,obj)
   Gyreactive(obj.SW,obj)
   Gyisland(obj.Bus,obj)
@@ -145,13 +157,17 @@ switch flag
 
   obj.Line = gcall(obj.Line,obj);
   gcall(obj.PQ,obj)
-  gcall(obj.Shunt,obj)
+  obj.Syn = gcall(obj.Syn,obj);
+  gcall(obj.Exc,obj)
+  gcall(obj.Tg,obj)
   obj.PV = gcall(obj.PV,obj);
   obj.SW = gcall(obj.SW,obj);
   gisland(obj.Bus,obj)
   Gycall(obj.Line,obj)
   Gycall(obj.PQ,obj)
-  Gycall(obj.Shunt,obj)
+  obj.Syn = Gycall(obj.Syn,obj);
+  Gycall(obj.Exc,obj)
+  Gycall(obj.Tg,obj)
   Gycall(obj.PV,obj)
   Gycall(obj.SW,obj)
   Gyisland(obj.Bus,obj)
@@ -161,29 +177,40 @@ switch flag
 
   obj.Line = gcall(obj.Line,obj);
   gcall(obj.PQ,obj)
-  gcall(obj.Shunt,obj)
+  obj.Syn = gcall(obj.Syn,obj);
+  gcall(obj.Exc,obj)
+  gcall(obj.Tg,obj)
   obj.PV = gcall(obj.PV,obj);
   obj.SW = gcall(obj.SW,obj);
   gisland(obj.Bus,obj)
   Gycall(obj.Line,obj)
   Gycall(obj.PQ,obj)
-  Gycall(obj.Shunt,obj)
+  obj.Syn = Gycall(obj.Syn,obj);
+  Gycall(obj.Exc,obj)
+  Gycall(obj.Tg,obj)
   Gycall(obj.PV,obj)
   Gycall(obj.SW,obj)
   Gyisland(obj.Bus,obj)
 
 
-  
+  fcall(obj.Syn,obj)
+  obj.Exc = fcall(obj.Exc,obj);
+  obj.Tg = fcall(obj.Tg,obj);
+
   if obj.DAE.n > 0
   obj.DAE.Fx = sparse(obj.DAE.n,obj.DAE.n);
   obj.DAE.Fy = sparse(obj.DAE.n,obj.DAE.m);
   obj.DAE.Gx = sparse(obj.DAE.m,obj.DAE.n);
   end 
 
+  Fxcall(obj.Syn,obj)
+  Fxcall(obj.Exc,obj)
+  Fxcall(obj.Tg,obj)
   Fxcall(obj.PV,obj)
   Fxcall(obj.SW,obj)
 
  case '5'
 
-  
+  windup(obj.Exc,obj)
+
 end
