@@ -1,4 +1,4 @@
-function check = matpower2psat(filename, pathname)
+function check = matpower2psat(filename)
 % MATPOWER2PSAT Matpower 2 PSAT filter
 %
 % CHECK = MATPOWER2PSAT(FILENAME,PATHNAME)
@@ -25,98 +25,97 @@ function check = matpower2psat(filename, pathname)
 %
 % Copyright (C) 2002-2007 Federico Milano
 
-global Settings Path
-
 check = 0;
-pathname = [pathname,filesep];
+% pathname = [pathname,filesep];
 
-fm_disp
-fm_disp('Conversion from Matpower Data Format ...');
-fm_disp(['Source data file "',pathname,filename,'"'])
-
+fprintf(pad('Conversion from Matpower Data Format',50,'right','.'))
+fprintf('\n')
 baseMVA = [];
 bus = [];
 gen = [];
 branch = [];
 area = [];
 gencost = [];
-bus_name = []
-try
-  cd(pathname)
-  mpc = feval(filename(1:end-2));
+bus_name = [];
+% try
+%   cd(pathname)
+%   mpc = feval(filename(1:end-2));
+  mpc = loadcase(filename);
   baseMVA = mpc.baseMVA;
   bus = mpc.bus;
   gen = mpc.gen;
   branch = mpc.branch;
 %   area = mpc.area;
-%   gencost = mpc.gencost;
-  cd(Path.local)
-catch
-  fm_disp(['Something wrong with the file ',pathname,filename])
-  fm_disp('Conversion Process Interrupted',2)
-  return
-end
+  gencost = mpc.gencost;
+%   cd(Path.local)
+% catch
+%   fm_disp(['Something wrong with the file ',pathname,filename])
+%   fm_disp('Conversion Process Interrupted',2)
+%   return
+% end
 
 try
   bus_name = mpc.bus_name;
 catch
-  fm_disp(['Bus names undefined. Using default names'])
+  error('PSAT:filter','Bus names undefined. Using default names')
 end
-lasterr('')
+% lasterr('')
 
 try
-  if baseMVA == 0, baseMVA = 100; end
-  gen(find(gen(:,7)== 0),7) = baseMVA;
-  bus(:,[3 4 5 6]) = bus(:,[3 4 5 6])/baseMVA;
-  if sum(bus(:,10)) == 0, bus(:,10) = 1; end
-  bus(:,9) = pi*bus(:,9)/180;
-  gen(:,2) = gen(:,2)./gen(:,7);
-  gen(:,3) = gen(:,3)./gen(:,7);
-  gen(:,4) = gen(:,4)./gen(:,7);
-  gen(:,5) = gen(:,5)./gen(:,7);
-  gen(:,9) = gen(:,9)./gen(:,7);
-  gen(:,10) = gen(:,10)./gen(:,7);
-  branch(:,[6 7 8]) = branch(:,[6 7 8])/baseMVA;
-  if bus,
-    if length(bus(1,:)) ~= 13,
-      error('Bus data is not in the standard format'),
-    end,
-  end
-  if gen,
-    if length(gen(1,:)) ~= 10,
-      error('Generator data is not in the standard format'),
-    end,
-  end
-  if branch,
-    if length(branch(1,:)) ~= 11,
-      error('Branch data is not in the standard format'),
-    end,
-  end
-  if area,
-    if length(area(1,:)) ~= 2,
-      error('Area data is not in the standard format'),
-    end,
-  end
-  if gencost,
-    if length(gencost(1,:)) ~= max(gencost(:,4)),
-      error('Generator cost data is not in the standard format'),
-    end,
-  end
+    if baseMVA == 0
+        baseMVA = 100;
+    end
+%     gen(find(gen(:,7)== 0),7) = baseMVA;
+    gen(gen(:,7)== 0 ,7) = baseMVA;
+    bus(:,[3 4 5 6]) = bus(:,[3 4 5 6])/baseMVA;
+    if sum(bus(:,10)) == 0
+        bus(:,10) = 1;
+    end
+    bus(:,9) = pi*bus(:,9)/180;
+    gen(:,2) = gen(:,2)./gen(:,7);
+    gen(:,3) = gen(:,3)./gen(:,7);
+    gen(:,4) = gen(:,4)./gen(:,7);
+    gen(:,5) = gen(:,5)./gen(:,7);
+    gen(:,9) = gen(:,9)./gen(:,7);
+    gen(:,10) = gen(:,10)./gen(:,7);
+    branch(:,[6 7 8]) = branch(:,[6 7 8])/baseMVA;
+    if bus
+        if length(bus(1,:)) ~= 13
+            error('Bus data is not in the standard format'),
+        end
+    end
+    if gen
+        if length(gen(1,:)) ~= 10,
+            error('Generator data is not in the standard format'),
+        end
+    end
+    if branch
+        if length(branch(1,:)) ~= 11,
+            error('Branch data is not in the standard format'),
+        end
+    end
+    if area
+        if length(area(1,:)) ~= 2,
+            error('Area data is not in the standard format'),
+        end
+    end
+    if gencost
+        if length(gencost(1,:)) ~= max(gencost(:,4)),
+            error('Generator cost data is not in the standard format'),
+        end
+    end
 catch
-  fm_disp(['Error in data file ',pathname,filename])
-  fm_disp(lasterr)
-  fm_disp('Conversion process interrupted.',2)
-  return
+    error('PSAT:filter','Error in data file ')
 end
 
 % definition of file name for PSAT data file
-extension = findstr(filename,'.');
-newfile = ['d_',filename(1:extension(end)-1),'.m'];
+% extension = findstr(filename,'.');
+% newfile = ['d_',filename(1:extension(end)-1),'.m'];
+newfile = ['psat_' filename];
 % open *.m file for writing data
-fid = fopen([pathname,newfile], 'wt');
-if fid == -1,
-  fm_disp(['Can''t open file ',pathname,newfile],2),
-  return,
+fid = fopen(newfile, 'wt');
+if fid == -1
+  error('PSAT:filter', "Can't open file"+ newfile)
 end
 
 % Bus data: Bus.con
@@ -220,7 +219,7 @@ end
 
 % Area data
 % ----------------------------------------------------------------------
-if ~isempty(area),
+if ~isempty(area)
   fm_disp(['Area data are not defined in PSAT for ', ...
            'OPF computations.'])
 end
@@ -242,7 +241,7 @@ if ~isempty(gencost)
   ncost = length(gencost(:,1));
   coeff = zeros(ncost,3);
   h = find(gencost(:,1) == 1);
-  if h,
+  if h
     fm_disp(['Piecewise linear generator costs are ', ...
              'converted in polynomial approximations.'])
   end
@@ -251,9 +250,9 @@ if ~isempty(gencost)
     xidx = 4+(1:2:2*n);
     yidx = 4+(2:2:2*n);
     a = polyfit(gencost(h(i),xidx),gencost(h(i),yidx),min(2,n-1));
-    if length(a) == 3,
+    if length(a) == 3
       a = a(3:-1:1);
-    elseif length(a) == 2,
+    elseif length(a) == 2
       a = [a(2), a(1), 0];
     else
       a = [0 1 0];
@@ -261,15 +260,15 @@ if ~isempty(gencost)
     coeff(h(i),:) = a;
   end
   h = find(gencost(:,1) == 2);
-  if h && ~isempty(find(gencost(h,4) > 3)),
-    fm_disp('Polynomial generator costs are reduced to 2nd order polynomials.'),
-  end
+%   if h && ~isempty(find(gencost(h,4) > 3))
+%     fm_disp('Polynomial generator costs are reduced to 2nd order polynomials.'),
+%   end
   for i = 1:length(h)
     n = gencost(h(i),4);
     a = gencost(h(i),5:min(4+n,8));
-    if length(a) == 3,
+    if length(a) == 3
       a = a(3:-1:1);
-    elseif length(a) == 2,
+    elseif length(a) == 2
       a = [a(2), a(1), 0];
     else
       a = [0 1 0];
@@ -294,7 +293,7 @@ end
 
 if isempty(bus_name)
   bus_name = cell(nbus,1);
-  for i = 1:nbus,
+  for i = 1:nbus
     bus_name{i,1} = deblank(['Bus',fvar(bus(i,1),5)]);
   end
 end
@@ -309,9 +308,8 @@ end
 count = fprintf(fid, ['''', deblank(bus_name{end}(1:min(end, 10))),'''};\n\n']);
 
 % end of operations
-fm_disp(['Conversion into data file "',pathname,newfile,'" completed.'])
-if Settings.beep
-  beep
-end
+% fm_disp(['Conversion into data file "',pathname,newfile,'" completed.'])
 fclose(fid);
 check = 1;
+fprintf('\b[COMPLETED]\n')
+fprintf('Output file: %45s\n', ['<a href="matlab: opentoline(''%s'',1)">' filename '</a>'])
