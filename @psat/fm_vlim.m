@@ -1,4 +1,4 @@
-function  [Vx,Vn] = fm_vlim(obj,maxV,minV)
+function  [Vx,Vn] = fm_vlim(obj,minV,maxV)
 % FM_VLIM determines max and min bus voltages
 %
 % [VMAX,VMIN] = FM_VLIM(MAXV,MINV)

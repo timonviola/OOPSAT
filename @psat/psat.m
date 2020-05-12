@@ -1018,7 +1018,7 @@ classdef psat < handle
        fm_idx(obj,flag)
        % Small Signal Stability
        fm_abcd(obj) % LA DAE Exc Tg Line Svc Tcsc Statcom Sssc Upfc Hvdc
-       fm_vlim(obj)
+       [Vx,Vn] = fm_vlim(obj,minV,maxV)
        % File readers
        readPsatFile(obj,fileName) % Read PSAT data file and assign values
        %    to PSAT instance
