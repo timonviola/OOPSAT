@@ -1022,6 +1022,7 @@ classdef psat < handle
        % File readers
        readPsatFile(obj,fileName) % Read PSAT data file and assign values
        %    to PSAT instance
+       res = powerFlowResults(obj,varargin) % Powerflow data extraction
     end
     methods (Static)
         [fig,ht] = fm_enter(upath,psatver,psatdate)
