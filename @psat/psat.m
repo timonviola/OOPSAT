@@ -1007,7 +1007,8 @@ classdef psat < handle
        fm_base(obj) % execute base() of all subclass
        fm_errv(Vold,msg,busidx,psat_obj)
        fm_wcall(obj)
-       
+       fm_inilf(obj)
+       fm_restore(obj)
        fm_call(obj,flag) % THIS IS !!!
     
        fm_dynlf(obj)

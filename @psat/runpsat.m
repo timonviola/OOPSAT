@@ -67,7 +67,7 @@ end
 
 % check if the data file has been changed
 changedata = strcmp(routine,'data');
-if nargin > 1
+if nargin > 2
   changedata = changedata || ~strcmp(varargin{1},obj.File.data);
 end
 
@@ -230,7 +230,7 @@ switch routine
   if obj.clpsat.readfile || obj.Settings.init == 0
     % If MATPOWER is to be used: all data should be passed at this point and nothing executing after this
 %% SCRIPT call fm_inilf
-    obj.fm_inilf
+    obj.fm_inilf()
 
     filedata = [obj.File.data,'  '];
     filedata = strrep(filedata,'@ ','');
@@ -277,11 +277,11 @@ switch routine
   end
 
   if obj.Settings.init
-    fm_restore
-    if obj.Settings.conv, fm_base, end
-    obj.Line = build_y(obj.Line);
-    fm_wcall;
-    fm_dynlf;
+    obj.fm_restore
+    if obj.Settings.conv, obj.fm_base, end
+    obj.Line = build_y(obj.Line, obj);
+    obj.fm_wcall;
+    obj.fm_dynlf;
   end
 
   filedata = deblank(strrep(obj.File.data,'(mdl)','_mdl'));

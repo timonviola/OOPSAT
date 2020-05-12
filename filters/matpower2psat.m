@@ -312,4 +312,4 @@ count = fprintf(fid, ['''', deblank(bus_name{end}(1:min(end, 10))),'''};\n\n']);
 fclose(fid);
 check = 1;
 fprintf('\b[COMPLETED]\n')
-fprintf('Output file: %45s\n', ['<a href="matlab: opentoline(''%s'',1)">' filename '</a>'])
+fprintf('Output file: %45s\n', ['<a href="matlab: opentoline(''%s'',1)">' newfile '</a>'])

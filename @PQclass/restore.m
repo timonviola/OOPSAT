@@ -6,7 +6,7 @@ if isempty(a.store)
 end
 
 a.con = a.store;
-a = setup(a);
+a = setup(a,psat_obj);
 
 switch nargin-1
  case 2
