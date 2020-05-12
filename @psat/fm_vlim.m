@@ -1,4 +1,4 @@
-function  [Vx,Vn] = fm_vlim(maxV,minV)
+function  [Vx,Vn] = fm_vlim(obj,maxV,minV)
 % FM_VLIM determines max and min bus voltages
 %
 % [VMAX,VMIN] = FM_VLIM(MAXV,MINV)
@@ -16,24 +16,22 @@ function  [Vx,Vn] = fm_vlim(maxV,minV)
 %
 %Copyright (C) 2002-2019 Federico Milano
 
-global Bus SW PV PQ
+Vn = getzeros(obj.Bus);
+Vx = getzeros(obj.Bus);
 
-Vn = getzeros(Bus);
-Vx = getzeros(Bus);
-
-if PQ.n
-  Vn(PQ.bus) = vmin(PQ);
-  Vx(PQ.bus) = vmax(PQ);
+if obj.PQ.n
+  Vn(obj.PQ.bus) = vmin(obj.PQ);
+  Vx(obj.PQ.bus) = vmax(obj.PQ);
 end
 
-if PV.n
-  Vn(PV.bus) = vmin(PV);
-  Vx(PV.bus) = vmax(PV);
+if obj.PV.n
+  Vn(obj.PV.bus) = vmin(obj.PV);
+  Vx(obj.PV.bus) = vmax(obj.PV);
 end
 
-if SW.n
-  Vn(SW.bus) = vmin(SW);
-  Vx(SW.bus) = vmax(SW);
+if obj.SW.n
+  Vn(obj.SW.bus) = vmin(obj.SW);
+  Vx(obj.SW.bus) = vmax(obj.SW);
 end
 
 Vn(find(Vn == 0)) = minV;
