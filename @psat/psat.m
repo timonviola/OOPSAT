@@ -1023,6 +1023,7 @@ classdef psat < handle
        readPsatFile(obj,fileName) % Read PSAT data file and assign values
        %    to PSAT instance
        res = powerFlowResults(obj,varargin) % Powerflow data extraction
+       gens = genlist(obj) % bus numbers of all generators, including slack
     end
     methods (Static)
         [fig,ht] = fm_enter(upath,psatver,psatdate)
