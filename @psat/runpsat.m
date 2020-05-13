@@ -131,10 +131,10 @@ end
 
 % remove extension from data file (only Matlab files)
 if length(obj.File.data) >= 2 && strcmp(routine,'data')
-  if strcmp(obj.File.data(end-1:end),'.m')
-    obj.File.data = obj.File.data(1:end-2);
-  end
-end
+%   if strcmp(obj.File.data(end-1:end),'.m')
+%     obj.File.data = obj.File.data(1:end-2);
+%   end
+ end
 
 % remove extension from perturbation file (only Matlab files)
 if length(obj.File.pert) >= 2 && strcmp(routine,'pert')
@@ -145,7 +145,7 @@ end
 
 % set local path as data path to prevent undesired change
 % of path within user defined functions
-obj.Path.local = obj.Path.data;
+obj.Path.local = pwd;%obj.Path.data;
 
 % check if the data file is a Simulink model
 obj.File.data = strrep(obj.File.data,'.mdl','(mdl)');
@@ -251,8 +251,12 @@ switch routine
     filedata = deblank(strrep(filedata,'(mdl)','_mdl'));
     a = exist(filedata);
     clear(filedata)
-    if a == 2,
-      b = dir([filedata,'.m']);
+    if a == 2
+      if ~(strcmp(filedata(end-1:end),'.m'))
+        b = dir([filedata,'.m']);
+      else
+        b = dir(filedata);
+      end
       lasterr('');
       %if ~strcmp(obj.File.modify,b.date)
       try
