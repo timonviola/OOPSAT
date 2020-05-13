@@ -1,15 +1,15 @@
 %POWERFLOWRESULTS Extract power-flow data from PSAT object.
 %
-%   res = POWERFLOWRESULTS(OBJ) returns the following data as fields of the
-%   output res struct:
+%   res = POWERFLOWRESULTS(OBJ) returns the following data
+%   as fields of the output res struct:
 %     o PG generator active power output
 %     o QG generator reactive power output
 %     o VM bus voltage magnitude
 %     o Sf complex power branch flows (from)
 %     o St complex power branch flows (to)
 %   
-%   res = obj.POWERFLOWRESULTS('print') prints the BUS and BRANCH FLOW data 
-%   to STDOUT
+%   res = obj.POWERFLOWRESULTS('print') prints the BUS and
+%   BRANCH FLOW data to STDOUT.
 %
 function results = powerFlowResults(obj,varargin)
 PRINT = false;
