@@ -8,8 +8,8 @@
 %     o Sf complex power branch flows (from)
 %     o St complex power branch flows (to)
 %     o gen
-%       - PG generator active power
-%       - QG generator reactive power
+%       - PG generator active power [MW]
+%       - QG generator reactive power [MVAR]
 %
 %   res = obj.POWERFLOWRESULTS('print') prints the BUS and
 %   BRANCH FLOW data to STDOUT.
@@ -19,7 +19,7 @@ function results = powerFlowResults(obj,varargin)
 PRINT = false;
 switch obj.Settings.absvalues
  case 'on'
-  MVA  = Settings.mva;
+  MVA  = obj.Settings.mva;
   VB   = getkv(obj.Bus,0,0);
   MW   = '[MW]';
   MVar = '[MVar]';
@@ -118,8 +118,8 @@ results.QG = Qgs;
 results.VM = vBus;
 results.Sf = Sf;
 results.St = St;
-results.gen.PG = Pgs(obj.genlist);
-results.gen.QG = Qgs(obj.genlist);
+results.gen.PG = Pgs(obj.genlist).*obj.Settings.mva;
+results.gen.QG = Qgs(obj.genlist).*obj.Settings.mva;
 end
 
 
