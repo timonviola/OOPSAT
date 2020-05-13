@@ -2,15 +2,19 @@
 %
 %   res = POWERFLOWRESULTS(OBJ) returns the following data
 %   as fields of the output res struct:
-%     o PG generator active power output
-%     o QG generator reactive power output
+%     o PG active power generation/load at all buses
+%     o QG reactive power generation/load at all buses
 %     o VM bus voltage magnitude
 %     o Sf complex power branch flows (from)
 %     o St complex power branch flows (to)
-%   
+%     o gen
+%       - PG generator active power
+%       - QG generator reactive power
+%
 %   res = obj.POWERFLOWRESULTS('print') prints the BUS and
 %   BRANCH FLOW data to STDOUT.
 %
+%   See also PSAT.GENLIST.
 function results = powerFlowResults(obj,varargin)
 PRINT = false;
 switch obj.Settings.absvalues
@@ -114,7 +118,8 @@ results.QG = Qgs;
 results.VM = vBus;
 results.Sf = Sf;
 results.St = St;
-
+results.gen.PG = Pgs(obj.genlist);
+results.gen.QG = Qgs(obj.genlist);
 end
 
 
