@@ -105,11 +105,11 @@ if PRINT
       'S From', 'S To';' ',' ',' ',MW,MVar,MW,MVar,MVar,MVar};
   [nRow, nCol] = size(header);
   for i = 1:nRow
-      fprintf([repmat('%8s',1,nCol) '\n'],header{i,:})
+      fprintf(['  ' repmat('%8s',1,nCol) '\n'],header{i,:})
   end
   for i = 1:length(line_q_losses)
-      fprintf('%5s%10s%8d%8.3f%8.3f%8.3f%8.3f%8.3f%8.3f\n',...
-          fRows(i,1:end),tRows(i,1:end),line_ffr(i,1),line_ffr(i,4),...
+      fprintf('%2s%5s%10s%8d%8.3f%8.3f%8.3f%8.3f%8.3f%8.3f\n',...
+          ' ',fRows(i,1:end),tRows(i,1:end),line_ffr(i,1),line_ffr(i,4),...
           line_ffr(i,5),line_p_losses(i),line_q_losses(i),Sf(i),St(i))
   end
 end
@@ -118,8 +118,11 @@ results.QG = Qgs;
 results.VM = vBus;
 results.Sf = Sf;
 results.St = St;
-results.gen.PG = Pgs(obj.genlist).*obj.Settings.mva;
-results.gen.QG = Qgs(obj.genlist).*obj.Settings.mva;
+
+[gIdx, ~] = sort(obj.genlist);
+results.gen.PG = Pgs(gIdx).*obj.Settings.mva;
+results.gen.QG = Qgs(gIdx).*obj.Settings.mva;
+results.gen.idx = gIdx;
 end
 
 
