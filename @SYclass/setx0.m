@@ -39,7 +39,7 @@ if ~isempty(idx)
   if psat_obj.Settings.conv
     a.con(idx,18) = a.con(idx,18).*a.con(idx,2)/psat_obj.Settings.mva;
   end
-  warn(a,idx,' Inertia cannot be <= 0. M = 10 [kWs/kVa] will be used.')
+  warn(a,idx,' Inertia cannot be <= 0. M = 10 [kWs/kVa] will be used.',psat_obj)
 end
 idx = find(a.con(:,9) <= 0);
 if ~isempty(idx)
@@ -47,7 +47,7 @@ if ~isempty(idx)
   if psat_obj.Settings.conv
     a.con(idx,9)= (a.con(idx,9)./a.con(idx,2))*psat_obj.Settings.mva;
   end
-  warn(a,idx,' x''d cannot be <= 0. x''d = 0.302 [p.u.] will be used.')
+  warn(a,idx,' x''d cannot be <= 0. x''d = 0.302 [p.u.] will be used.',psat_obj)
 end
 % check xd, T'd0 and T"d0
 is = [is3; is4; is51; is52; is53; is6; is8];
@@ -58,13 +58,13 @@ if ~isempty(idx)
   if psat_obj.Settings.conv
     a.con(idx,8)= (a.con(idx,8)./a.con(idx,2))*psat_obj.Settings.mva;
   end
-  warn(a,idx,' xd cannot be <= 0. xd = 1.90 [p.u.] will be used.')
+  warn(a,idx,' xd cannot be <= 0. xd = 1.90 [p.u.] will be used.',psat_obj)
 end
 idx = find(a.con(is,11) <= 0);
 if ~isempty(idx)
   idx = is(idx);
   a.con(idx,11) = 8.00;
-  warn(a,idx,' T''d0 cannot be <= 0. T''d0 = 8.00 [s] will be used.')
+  warn(a,idx,' T''d0 cannot be <= 0. T''d0 = 8.00 [s] will be used.',psat_obj)
 end
 % check T"d0, x"d and x"q
 is = [is52; is6; is8];
@@ -72,7 +72,7 @@ idx = find(a.con(is,12) <= 0);
 if ~isempty(idx)
   idx = is(idx);
   a.con(idx,12) = 0.04;
-  warn(a,idx,' T"d0 cannot be <= 0. T"d0 = 0.04 [s] will be used.')
+  warn(a,idx,' T"d0 cannot be <= 0. T"d0 = 0.04 [s] will be used.',psat_obj)
 end
 idx = find(a.con(is,10) <= 0);
 if ~isempty(idx)
@@ -81,7 +81,7 @@ if ~isempty(idx)
   if psat_obj.Settings.conv
     a.con(idx,10)= (a.con(idx,10)./a.con(idx,2))*psat_obj.Settings.mva;
   end
-  warn(a,idx,' x"d cannot be <= 0. x"d = 0.204 [p.u.] will be used.')
+  warn(a,idx,' x"d cannot be <= 0. x"d = 0.204 [p.u.] will be used.',psat_obj)
 end
 idx = find(a.con(is,15) <= 0);
 if ~isempty(idx)
@@ -90,7 +90,7 @@ if ~isempty(idx)
   if psat_obj.Settings.conv
     a.con(idx,15)= (a.con(idx,15)./a.con(idx,2))*psat_obj.Settings.mva;
   end
-  warn(a,idx,' x"q cannot be <= 0. x"q = 0.30 [p.u.] will be used.')
+  warn(a,idx,' x"q cannot be <= 0. x"q = 0.30 [p.u.] will be used.',psat_obj)
 end
 % check T'q0
 is = [is4; is51; is6; is8];
@@ -98,7 +98,7 @@ idx = find(a.con(is,16) <= 0);
 if ~isempty(idx)
   idx = is(idx);
   a.con(idx,16) = 0.80;
-  warn(a,idx,' T''q0 cannot be <= 0. T''q0 = 0.80 [s] will be used.')
+  warn(a,idx,' T''q0 cannot be <= 0. T''q0 = 0.80 [s] will be used.',psat_obj)
 end
 % check T"q0
 is = [is51; is52; is6; is8];
@@ -106,7 +106,7 @@ idx = find(a.con(is,17) <= 0);
 if ~isempty(idx)
   idx = is(idx);
   a.con(idx,17) = 0.02;
-  warn(a,idx,' T"q0 cannot be <= 0. T"q0 = 0.02 [s] will be used.')
+  warn(a,idx,' T"q0 cannot be <= 0. T"q0 = 0.02 [s] will be used.',psat_obj)
 end
 % check xq
 is = [is3; is4; is51; is52; is53; is6; is8];
@@ -117,7 +117,7 @@ if ~isempty(idx)
   if psat_obj.Settings.conv
     a.con(idx,13)= (a.con(idx,13)./a.con(idx,2))*psat_obj.Settings.mva;
   end
-  warn(a,idx,' xq cannot be <= 0. xq = 1.70 [p.u.] will be used.')
+  warn(a,idx,' xq cannot be <= 0. xq = 1.70 [p.u.] will be used.',psat_obj)
 end
 % check x'q
 is = [is4; is51; is6; is8];
@@ -128,7 +128,7 @@ if ~isempty(idx)
   if psat_obj.Settings.conv
     a.con(idx,14)= (a.con(idx,14)./a.con(idx,2))*psat_obj.Settings.mva;
   end
-  warn(a,idx,' x''q cannot be <= 0. x''q = 0.50 [p.u.] will be used.')
+  warn(a,idx,' x''q cannot be <= 0. x''q = 0.50 [p.u.] will be used.',psat_obj)
 end
 % check Taa and saturation factors
 % if saturation factors are defined, Taa = 0 is used.
@@ -169,13 +169,13 @@ for i = 1:a.n
     idx = find(a.bus == n_new);
     if length(idx) == 1
       if a.con(idx,22) ~= 1
-        fm_disp(['Warning: Active power ratio of ', ...
+        psat_obj.fm_disp(['Warning: Active power ratio of ', ...
                  'generator #', ...
                  num2str(idx),' must be 1'])
         a.con(idx,22) = 1;
       end
       if a.con(idx,23) ~= 1
-        fm_disp(['Warning: Reactive power ratio of ', ...
+        psat_obj.fm_disp(['Warning: Reactive power ratio of ', ...
                  'generator #', ...
                  num2str(idx),' must be 1'])
         a.con(idx,23) = 1;
@@ -185,7 +185,7 @@ for i = 1:a.n
       ratiop = sum(a.con(idx,22));
       ratioq = sum(a.con(idx,23));
       if abs(ratiop-1) > 1e-5
-        fm_disp(['Warning: The sum of active power ', ...
+        psat_obj.fm_disp(['Warning: The sum of active power ', ...
                  'ratios of generators #', ...
                  num2str(idx'),' must be 1'])
         a.con(idx,22) = 1/numsyn;
@@ -193,7 +193,7 @@ for i = 1:a.n
         a.con(idx(1),22) = a.con(idx(1),22)-(ratiop-1);
       end
       if abs(ratioq-1) > 1e-5
-        fm_disp(['Warning: The sum of reactive power ', ...
+        psat_obj.fm_disp(['Warning: The sum of reactive power ', ...
                  'ratios of generators #', ...
                  num2str(idx'),' must be 1'])
         a.con(idx,23) = 1/numsyn;

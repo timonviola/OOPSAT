@@ -45,7 +45,7 @@ psat_obj.PV = remove(psat_obj.PV,idx_pv,psat_obj);
 psat_obj.PQ = remove(psat_obj.PQ,idx_pq,'force');
 
 if isempty(idx_pv) && isempty(idx_sw) && isempty(idx_pq)
-  fm_disp([' * * Error: No static generator found at bus <', ...
+  disp([' * * Error: No static generator found at bus <', ...
            psat_obj.Bus.names{idx},'>'])
   check = 0;
 end

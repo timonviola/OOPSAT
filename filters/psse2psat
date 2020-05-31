@@ -269,13 +269,13 @@ while (<IN>) {
     }	    
     
     # shunt data V23, V24 and V25 formats
-    if ($data[4] != 0  || $data[5] != 0) {
-	$nsh++; 
-	$idxsh[$nsh] = int($data[0]);
-	$psh[$nsh] = $data[4]/$pbas/$ein[$nbus]/$ein[$nbus];	
-	$qsh[$nsh] = $data[5]/$pbas/$ein[$nbus]/$ein[$nbus];	
-	$shu[$nsh] = ididx($idxsh[$nsh]);
-    }
+    #if ($data[4] != 0  || $data[5] != 0) {
+	#$nsh++; 
+	#$idxsh[$nsh] = int($data[0]);
+	#$psh[$nsh] = $data[4]/$pbas/$ein[$nbus]/$ein[$nbus];	
+	#$qsh[$nsh] = $data[5]/$pbas/$ein[$nbus]/$ein[$nbus];	
+	#$shu[$nsh] = ididx($idxsh[$nsh]);
+    #}
 }
 
 # load data PSS/E V29 and V30

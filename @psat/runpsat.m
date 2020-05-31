@@ -314,7 +314,7 @@ switch routine
     end
   end
 %% SCRIPT CALL FM_SPF
-  obj.fm_spf
+  obj.fm_spf()
   obj.SNB.init = 0;
   obj.LIB.init = 0;
   obj.CPF.init = 0;
