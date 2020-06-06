@@ -46,8 +46,18 @@ end
 
 % ----- bus voltages: 
 [busNames, ordbus] = sort(obj.Bus.names(1:end)); %#ok b cell array of names,
-busNames = cell2mat(obj.Bus.names);
-
+try
+    busNames = cell2mat(obj.Bus.names);
+catch e
+    switch e.identifier
+        case 'MATLAB:catenate:dimensionMismatch'
+             maxL = max(cellfun('length',obj.Bus.names));
+             pd = @(x) pad(x,maxL);
+             busNames = cell2mat(cellfun(pd,obj.Bus.names,'UniformOutput',false));
+        otherwise
+            rethrow(e)
+    end
+end
 vBus = obj.DAE.y(ordbus+obj.Bus.n).*VB(ordbus);
 % bus voltages
 % ps.DAE.y(ps.Bus.v)
