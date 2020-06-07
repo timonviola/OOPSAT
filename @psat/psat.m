@@ -1024,6 +1024,10 @@ classdef psat < handle
        %    to PSAT instance
        res = powerFlowResults(obj,varargin) % Powerflow data extraction
        gens = genlist(obj) % bus numbers of all generators, including slack
+       % set PSAT PG and VG values to given vector
+       PVSet(obj, set_point_vector)
+       % set PSAT PG values to given vector
+       PSet(obj, set_point_vector)
     end
     methods (Static)
         [fig,ht] = fm_enter(upath,psatver,psatdate)
