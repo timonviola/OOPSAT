@@ -17,11 +17,6 @@ function check = psat2ieee(varargin)
 %
 % Copyright (C) 2002-2009 Federico Milano
 
-global DAE Varname Settings
-
-DAE_old = DAE;
-Varname_old = Varname;
-Settings_old = Settings;
 
 if nargin == 2
   filename = varargin{1};
@@ -39,12 +34,8 @@ end
 if strcmp(pathname(end),filesep)
   pathname = pathname(1:end-1);
 end
-if ~strcmp(pathname,pwd)
-  cd(pathname)
-end
 
-fm_disp
-fm_disp(['Opening PSAT file "',filename,'"...'])
+disp(['Opening PSAT file "',filename,'"...'])
 
 % General Settings
 % ----------------------------------------------------------------
@@ -69,15 +60,15 @@ PQgen = PQclass;
 % ----------------------------------------------------------------
 
 a = exist(filename);
-if a == 2,
+if a == 2
   eval(filename(1:end-2))
   if nopowers
     PQ = pqzero(PQ,'all');
     PV = pvzero(PV,'all');
     SW = swzero(SW,'all');
   end
-else,
-  fm_disp(['File "',pathname,filesep,filename,'" not found or not an m-file'],2)
+else
+  disp(['File "',pathname,filesep,filename,'" not found or not an m-file'],2)
   check = 0;
   return
 end
@@ -99,11 +90,11 @@ PQ = addgen(PQ,PQgen,Bus);
 % ----------------------------------------------------------------------
 
 if Bus.n > 9999 && Bus.n <= 99999
-  fm_disp(['The number of buses is > 9999. Extended IEEE CDF will be ' ...
+  disp(['The number of buses is > 9999. Extended IEEE CDF will be ' ...
            'used.'])
 end
 if Bus.n > 99999
-  fm_disp(['Network dimension is too big for IEEE-CDF (max bus number ' ...
+  disp(['Network dimension is too big for IEEE-CDF (max bus number ' ...
            '= 99999).'],2)
   check = 0;
   return
@@ -113,7 +104,7 @@ end
 % ----------------------------------------------------------------------
 
 newfile = [filename(1:end-2),'.cf'];
-fm_disp(['Writing IEEE CDF file "',newfile,'"...'])
+disp(['Writing IEEE CDF file "',newfile,'"...'])
 fid = fopen([pathname,filesep, newfile], 'wt');
 
 % Title Data
@@ -327,7 +318,4 @@ count = fprintf(fid,'END OF DATA ');
 % ----------------------------------------------------------------
 
 fclose(fid);
-DAE = DAE_old;
-Varname = Varname_old;
-Settings = Settings_old;
-fm_disp('Conversion completed.')
+disp('Conversion completed.')
