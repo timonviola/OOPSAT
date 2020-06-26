@@ -1,8 +1,9 @@
 classdef psat < handle
+    % Copyright (C) 2020 Timon Viola
+    %
     %PSAT application instance that corresponds to a loaded case. The
     % purpose of oop is better maintainability and being able to run
-    % multiple PSAT instances. There is one rule above all: NEVER USE
-    % GLOBAL VARIABLES.
+    % multiple PSAT instances.
     
     properties
         % All the contents of fm_var
@@ -126,7 +127,7 @@ classdef psat < handle
         % CONSTRUCTOR
         function obj = psat(varargin)
             %PSAT Construct an instance of the application
-            %   Detailed explanation goes here
+            %   Detailed explanation goes here - before release 1.0.0
             %
             % Inputs (all optional):
             % COMMAND_LINE_PSAT - run psat in cli mode
