@@ -22,3 +22,9 @@ Tested versions:
 
 ## Why ?
 There are not too many open source projects that enable dynamic power system analysis and there are even less in MATLAB. OOPSAT was implemented as a neccessity to run small-signal stabiliyt analysis in an HPC cluster environment. Unfortunately it was impossible to use the original PSAT implementation for several reasons, thus a major rewrite was needed.
+
+
+# On the ramp
+* At one point OOPSAT should have all power-system analysis functionalities as PSAT.
+* It might be possible to ensure Octave compatibility.
+* It might be possible to ensure Python compatibility as the MATLAB engine allows calling MATLAB Classes.
