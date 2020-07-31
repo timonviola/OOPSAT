@@ -440,7 +440,7 @@ classdef psat < handle
             a = version;
             idx = findstr(a, '.');  %#ok
             obj.Settings.hostver = str2num(a(1:idx(1)-1)) + 0.01*str2num(a(idx(1)+1:idx(2)-1)); %#ok
-            obj.Settings.init = 0;
+            obj.Settings.init = 1;
             obj.Settings.donotask = 0;
             obj.Settings.version = psatver;
             obj.Settings.date = psatdate;
