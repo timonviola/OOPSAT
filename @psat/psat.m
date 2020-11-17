@@ -1,7 +1,7 @@
 classdef psat < handle
     % Copyright (C) 2020 Timon Viola
     %
-    %PSAT application instance that corresponds to a loaded case. The
+    % OOPSAT application instance that corresponds to a loaded case. The
     % purpose of oop is better maintainability and being able to run
     % multiple PSAT instances.
     

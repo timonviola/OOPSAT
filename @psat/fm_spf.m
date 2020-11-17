@@ -358,7 +358,7 @@ end
 % obj.Pl and Ql computation (shunts only)
 obj.DAE.g = zeros(obj.DAE.m,1);
 obj.fm_call('load0');
-obj.Bus.obj.Pl = obj.DAE.g(obj.Bus.a);
+obj.Bus.Pl = obj.DAE.g(obj.Bus.a);
 obj.Bus.Ql = obj.DAE.g(obj.Bus.v);
 
 %Pg and Qg computation
